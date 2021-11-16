@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'maven-publish'
 }
 
 group = 'com.hcl'
@@ -19,4 +20,26 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = "http://50.19.31.203:8081/repository/maven-snapshots/"
+            credentials {
+                username "admin"
+                password "admin123"
+            }
+        }
+    }
 }
